@@ -5,6 +5,7 @@ from typing import Optional, Dict
 import logging
 from contextlib import asynccontextmanager
 import sqlite3
+import uuid
 
 logger = logging.getLogger(__name__)
 
@@ -239,19 +240,27 @@ class DatabaseManager:
             logger.error(f"Error saving meeting: {str(e)}")
             raise
 
-    async def save_meeting_transcript(self, meeting_id: str, transcript: str, timestamp: str, summary: str = "", action_items: str = "", key_points: str = ""):
+    async def save_meeting_transcript(self, meeting_id: str, transcript: str, timestamp: str,
+                                      summary: str = "", action_items: str = "",
+                                      key_points: str = ""):
         """Save a transcript for a meeting"""
         try:
             with sqlite3.connect(self.db_path) as conn:
                 cursor = conn.cursor()
-                
-                # Save transcript
-                cursor.execute("""
+
+                # Generate a unique transcript ID
+                transcript_id = str(uuid.uuid4())
+
+                # Save transcript with generated ID
+                cursor.execute(
+                    """
                     INSERT INTO transcripts (
-                        meeting_id, transcript, timestamp, summary, action_items, key_points
-                    ) VALUES (?, ?, ?, ?, ?, ?)
-                """, (meeting_id, transcript, timestamp, summary, action_items, key_points))
-                
+                        id, meeting_id, transcript, timestamp, summary, action_items, key_points
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                    """,
+                    (transcript_id, meeting_id, transcript, timestamp, summary, action_items, key_points),
+                )
+
                 conn.commit()
                 return True
         except Exception as e:
