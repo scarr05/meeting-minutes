@@ -215,9 +215,14 @@ cd meeting-minutes/backend
 git clone https://github.com/Zackriya-Solutions/meeting-minutes.git
 cd meeting-minutes
 
-# Run the Docker build script (interactive setup)
-.\docker-build.bat
+# Build and run the backend using Docker
+./build-docker.sh
 ```
+This script builds the Docker image defined in `backend/Dockerfile` and runs it
+while exposing ports `5167` and `8178`.
+
+Once running, the FastAPI backend is available at `http://localhost:5167` and
+the Whisper server at `http://localhost:8178`.
 
 ### Docker Configuration Options
 
