@@ -20,7 +20,7 @@ needs_update() {
 }
 
 # Update API keys in .env file
-for key in ANTHROPIC_API_KEY GROQ_API_KEY OPENAI_API_KEY; do
+for key in ANTHROPIC_API_KEY GROQ_API_KEY OPENAI_API_KEY OPENROUTER_API_KEY; do
     # Get current value from environment
     current_value="${!key}"
     
@@ -38,5 +38,5 @@ done
 
 # Print final environment variables
 echo "Final API Keys:"
-grep -E "^(ANTHROPIC|GROQ|OPENAI)_API_KEY=" .env
+grep -E "^(ANTHROPIC|GROQ|OPENAI|OPENROUTER)_API_KEY=" .env
 echo "Environment setup complete!"
