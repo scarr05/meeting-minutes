@@ -108,6 +108,8 @@ Run the build script which will:
 - Build Whisper.cpp with custom server modifications
 - Set up the server package with required files
 - Download the selected Whisper model
+- The download script first tries **Start-BitsTransfer** and falls back to
+  **curl** or **Invoke-WebRequest** if BITS isn't available
 
 ```cmd
 ./build_whisper.cmd
