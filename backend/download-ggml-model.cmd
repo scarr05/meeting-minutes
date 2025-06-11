@@ -57,12 +57,24 @@ if %ERRORLEVEL% equ 0 (
     set "src=https://huggingface.co/ggerganov/whisper.cpp/resolve/main"
 )
 
-PowerShell -NoProfile -ExecutionPolicy Bypass -Command "Start-BitsTransfer -Source %src%/ggml-%model%.bin -Destination ggml-%model%.bin"
+set "url=%src%/ggml-%model%.bin"
+
+echo Attempting download using BITS...
+PowerShell -NoProfile -ExecutionPolicy Bypass -Command "try { Start-BitsTransfer -Source '%url%' -Destination 'ggml-%model%.bin' -ErrorAction Stop } catch { exit 1 }"
+
+if %ERRORLEVEL% neq 0 (
+  echo BITS transfer failed. Trying alternate method...
+  if exist "%SystemRoot%\System32\curl.exe" (
+    "%SystemRoot%\System32\curl.exe" -L -o "ggml-%model%.bin" "%url%"
+  ) else (
+    PowerShell -NoProfile -ExecutionPolicy Bypass -Command "Invoke-WebRequest -Uri '%url%' -OutFile 'ggml-%model%.bin'"
+  )
+)
 
 if %ERRORLEVEL% neq 0 (
   echo Failed to download ggml model %model%
   echo Please try again later or download the original Whisper model files and convert them yourself.
-  goto :eof
+  exit /b 1
 )
 
 echo Done! Model %model% saved in %CD%\ggml-%model%.bin
