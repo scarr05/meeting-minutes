@@ -132,8 +132,9 @@ class DatabaseManager:
         now = datetime.utcnow().isoformat()
         
         async with self._get_connection() as conn:
+            normalized_status = status.upper()
             update_fields = ["status = ?", "updated_at = ?"]
-            params = [status, now]
+            params = [normalized_status, now]
             
             if result:
                 update_fields.append("result = ?")
@@ -150,7 +151,7 @@ class DatabaseManager:
             if metadata:
                 update_fields.append("metadata = ?")
                 params.append(json.dumps(metadata))
-            if status == 'COMPLETED' or status == 'FAILED':
+            if normalized_status in ('COMPLETED', 'FAILED'):
                 update_fields.append("end_time = ?")
                 params.append(now)
                 
