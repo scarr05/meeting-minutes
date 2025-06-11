@@ -5,7 +5,7 @@ FastAPI backend for meeting transcription and analysis
 ## Features
 - Audio file upload and storage
 - Real-time Whisper-based transcription with streaming support
-- Meeting analysis with LLMs (supports Claude, Groq, and Ollama)
+- Meeting analysis with LLMs (supports Claude, Groq, Ollama, OpenAI, and OpenRouter)
 - REST API endpoints
 
 ## Requirements
@@ -230,7 +230,7 @@ The backend runs two services:
 - If services fail to start, the script will automatically clean up processes
 - Check logs for detailed error messages
 - Ensure all ports (5167 for backend, 8178 for Whisper) are available
-- Verify API keys if using Claude or Groq
+ - Verify API keys if using Claude, Groq, OpenAI, or OpenRouter
 - For Ollama, ensure the Ollama service is running and models are pulled
 - If build fails:
   - Ensure all dependencies (CMake, C++ compiler) are installed

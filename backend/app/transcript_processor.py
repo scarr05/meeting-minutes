@@ -102,6 +102,11 @@ class TranscriptProcessor:
                 if not api_key: raise ValueError("OPENAI_API_KEY environment variable not set")
                 llm = OpenAIModel(model_name, api_key=api_key)
                 logger.info(f"Using OpenAI model: {model_name}")
+            elif model == "openrouter":
+                api_key = await db.get_api_key("openrouter")
+                if not api_key: raise ValueError("OPENROUTER_API_KEY environment variable not set")
+                llm = OpenAIModel(model_name, api_key=api_key, base_url="https://openrouter.ai/api/v1")
+                logger.info(f"Using OpenRouter model: {model_name}")
             # --- END OPENAI SUPPORT ---
             else:
                 logger.error(f"Unsupported model provider requested: {model}")

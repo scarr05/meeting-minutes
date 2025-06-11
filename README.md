@@ -362,6 +362,8 @@ The backend supports multiple LLM providers through a unified interface. Current
 - **Anthropic** (Claude models)
 - **Groq** (Llama3.2 90 B)
 - **Ollama** (Local models that supports function calling)
+- **OpenAI** (GPT models)
+- **OpenRouter** (access to Bedrock models)
 
 
 
