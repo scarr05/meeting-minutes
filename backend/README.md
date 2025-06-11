@@ -236,3 +236,14 @@ The backend runs two services:
   - Ensure all dependencies (CMake, C++ compiler) are installed
   - Check if git submodules are properly initialized
   - Verify you have write permissions in the directory
+
+## Docker
+
+The backend can also run inside a Docker container. Use the provided script from
+the repository root to build and start the container:
+
+```bash
+./build-docker.sh
+```
+
+This exposes ports `5167` (FastAPI) and `8178` (Whisper server).
